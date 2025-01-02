@@ -1,0 +1,17 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MySoloLife" parent="Theme.AppCompat.DayNight">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MySoloLife" parent="Base.Theme.MySoloLife" />
+
+    <style name="AuthEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>
