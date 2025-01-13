@@ -13,30 +13,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <WebView
+                android:id="@+id/storeWebView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <LinearLayout
+                android:id="@+id/linearLayout8"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                android:baselineAligned="false"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout5">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    tools:ignore="UselessLeaf" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    tools:ignore="UselessLeaf" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    tools:ignore="UselessLeaf" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    tools:ignore="UselessLeaf" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

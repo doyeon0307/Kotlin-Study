@@ -10,19 +10,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mysololife.R
-import com.example.mysololife.utils.FBAuth
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 
-class ContentRVAdapter(val context: Context, private val items: ArrayList<ContentModel>, private val keys: ArrayList<String>, private val markedIds: ArrayList<String>) : RecyclerView.Adapter<ContentRVAdapter.Viewholder>() {
+class BookmarkRVAdapter(val context: Context, private val items: ArrayList<ContentModel>, private val keys: ArrayList<String>, private val markedIds: ArrayList<String>) : RecyclerView.Adapter<BookmarkRVAdapter.Viewholder>() {
 
     // 만들어 둔 아이템을 가져 옴
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentRVAdapter.Viewholder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkRVAdapter.Viewholder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.content_rv_item, parent, false)
         return Viewholder(v)
     }
 
-    override fun onBindViewHolder(holder: ContentRVAdapter.Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: BookmarkRVAdapter.Viewholder, position: Int) {
 
         holder.bindItems(items[position], keys[position])
 
@@ -53,39 +50,6 @@ class ContentRVAdapter(val context: Context, private val items: ArrayList<Conten
                 bookmarkArea.setImageResource(R.drawable.bookmark_color)
             } else {
                 bookmarkArea.setImageResource(R.drawable.bookmark_white)
-            }
-
-            bookmarkArea.setOnClickListener {
-                val db = Firebase.firestore
-
-                val uid = FBAuth.getUid()
-
-                if (markedIds.contains(key)) {
-                    // 북마크가 있을 때
-                    markedIds.remove(key)
-                    bookmarkArea.setImageResource(R.drawable.bookmark_white)
-                    db.collection("bookmarks")
-                        .document(uid)
-                        .collection("markedContents")
-                        .document(key)
-                        .delete()
-
-
-                } else {
-                    // 북마크가 없을 때
-                    markedIds.add(key)
-                    bookmarkArea.setImageResource(R.drawable.bookmark_color)
-                    db.collection("bookmarks")
-                        .document(uid)
-                        .collection("markedContents")
-                        .document(key)
-                        .set(
-                            hashMapOf(
-                                "contentId" to key
-                            )
-                        )
-
-                }
             }
 
             contentTitle.text = item.title
