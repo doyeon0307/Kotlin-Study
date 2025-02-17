@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav"
+    app:startDestination="@id/coinListFragment">
+
+    <fragment
+        android:id="@+id/coinListFragment"
+        android:name="com.example.coco.view.main.CoinListFragment"
+        android:label="fragment_coin_list"
+        tools:layout="@layout/fragment_coin_list" />
+    <fragment
+        android:id="@+id/priceChangeFragment"
+        android:name="com.example.coco.view.main.PriceChangeFragment"
+        android:label="fragment_price_change"
+        tools:layout="@layout/fragment_price_change" />
+</navigation>
