@@ -4,5 +4,9 @@
     <string name="search">Search Books</string>
     <string name="favorite">Favorite Books</string>
     <string name="settings">Settings</string>
+    <string name="title">TITLE</string>
+    <string name="author">AUTHOR</string>
+    <string name="date">DATE</string>
+    <string name="hint_search">Search..</string>
 
 </resources>

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     // secrets-gradle-plugin
     alias(libs.plugins.secrets.gradle.plugin)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -59,9 +60,22 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
     implementation(libs.moshi)
+    ksp(libs.moshi.codegen)
 
     // okhttp3
     implementation(libs.okhttp3)
     implementation(libs.okhttp3.logging.interceptor)
+
+    // coroutine
+    implementation(libs.coroutine)
+
+    // lifecycle
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    implementation(libs.kotlin)
+
+    // coil
+    implementation(libs.coil)
+    implementation(libs.coil.network)
 
 }

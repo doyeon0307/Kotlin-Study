@@ -5,15 +5,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ui.setupWithNavController
 import com.example.booksearch.R
+import com.example.booksearch.data.repository.BookSearchRepositoryImpl
 import com.example.booksearch.databinding.ActivityMainBinding
+import com.example.booksearch.ui.viewmodel.BookSearchViewModel
+import com.example.booksearch.ui.viewmodel.BookSearchViewModelProviderFactory
 
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
+    lateinit var bookSearchViewModel: BookSearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         setUpBottomNavigationView()
+
+        val bookSearchRepository = BookSearchRepositoryImpl()
+        val factory = BookSearchViewModelProviderFactory(bookSearchRepository, this)
+        bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 
     }
 
