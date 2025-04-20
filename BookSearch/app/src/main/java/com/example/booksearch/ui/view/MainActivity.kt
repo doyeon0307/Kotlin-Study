@@ -1,11 +1,16 @@
 package com.example.booksearch.ui.view
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+//import androidx.navigation.NavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.booksearch.R
 import com.example.booksearch.data.repository.BookSearchRepositoryImpl
@@ -20,14 +25,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     lateinit var bookSearchViewModel: BookSearchViewModel
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+
+            if (Build.VERSION.SDK_INT >= 35) {
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, v.paddingBottom)
+            } else {
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            }
+
             insets
         }
 
@@ -41,16 +52,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpBottomNavigationView() {
 
-        val bottomNavigationView = binding.bottomNavigationView
+        val host =
+            supportFragmentManager.findFragmentById(R.id.frame_layout) as androidx.navigation.fragment.NavHostFragment? ?: return
+        navController = host.navController
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.frame_layout) as? androidx.navigation.fragment.NavHostFragment
-        val navController = navHostFragment?.navController
-
-
-        navController?.let { controller ->
-            bottomNavigationView.setupWithNavController(controller)
-        }
+        binding.bottomNavigationView.setupWithNavController(navController)
 
     }
 

@@ -8,5 +8,7 @@
     <string name="author">AUTHOR</string>
     <string name="date">DATE</string>
     <string name="hint_search">Search..</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

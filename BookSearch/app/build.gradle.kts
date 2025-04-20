@@ -4,6 +4,10 @@ plugins {
     // secrets-gradle-plugin
     alias(libs.plugins.secrets.gradle.plugin)
     alias(libs.plugins.ksp)
+    // safe args
+    alias(libs.plugins.navigation.safeargs)
+    // parcelable generator
+    id("kotlin-parcelize")
 }
 
 android {

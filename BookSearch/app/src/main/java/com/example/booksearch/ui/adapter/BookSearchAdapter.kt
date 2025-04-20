@@ -9,6 +9,25 @@ import com.example.booksearch.databinding.ItemBookPreviewBinding
 
 class BookSearchAdapter: ListAdapter<Book, BookSearchViewHolder>(BookDiffCallBack ) {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookSearchViewHolder {
+        return BookSearchViewHolder(
+            ItemBookPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+    }
+
+    override fun onBindViewHolder(holder: BookSearchViewHolder, position: Int) {
+        val book = currentList[position]
+        holder.bind(book)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let { it(book) }
+        }
+    }
+
+    private var onItemClickListener: ((Book) -> Unit)?  = null
+    fun setOnItemClickListener(listener: (Book) -> Unit) {
+        onItemClickListener = listener
+    }
+
     companion object {
         private val BookDiffCallBack = object: DiffUtil.ItemCallback<Book>() {
             override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
@@ -20,17 +39,6 @@ class BookSearchAdapter: ListAdapter<Book, BookSearchViewHolder>(BookDiffCallBac
             }
 
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookSearchViewHolder {
-        return BookSearchViewHolder(
-            ItemBookPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
-    }
-
-    override fun onBindViewHolder(holder: BookSearchViewHolder, position: Int) {
-        val book = currentList[position]
-        holder.bind(book)
     }
 
 }
