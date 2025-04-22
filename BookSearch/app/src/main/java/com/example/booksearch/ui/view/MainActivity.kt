@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.booksearch.R
+import com.example.booksearch.data.db.BookSearchDatabase
 import com.example.booksearch.data.repository.BookSearchRepositoryImpl
 import com.example.booksearch.databinding.ActivityMainBinding
 import com.example.booksearch.ui.viewmodel.BookSearchViewModel
@@ -44,7 +45,8 @@ class MainActivity : AppCompatActivity() {
 
         setUpBottomNavigationView()
 
-        val bookSearchRepository = BookSearchRepositoryImpl()
+        val bookSearchDatabase = BookSearchDatabase.getInstance(this)
+        val bookSearchRepository = BookSearchRepositoryImpl(bookSearchDatabase)
         val factory = BookSearchViewModelProviderFactory(bookSearchRepository, this)
         bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 

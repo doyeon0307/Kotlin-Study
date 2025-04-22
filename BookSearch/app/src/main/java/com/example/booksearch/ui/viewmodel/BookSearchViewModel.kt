@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.booksearch.data.model.Book
 import com.example.booksearch.data.model.SearchResponse
 import com.example.booksearch.data.repository.BookSearchRepository
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,17 @@ class BookSearchViewModel (
         }
 
     }
+
+    // Room
+    fun saveBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
+        bookSearchRepository.insertBooks(book)
+    }
+
+    fun deleteBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
+        bookSearchRepository.deleteBooks(book)
+    }
+
+    val favoriteBooks: LiveData<List<Book>> = bookSearchRepository.getFavoriteBooks()
 
     // Saved State
     // 앱이 종료되어도 데이터 유지

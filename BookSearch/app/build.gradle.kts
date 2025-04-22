@@ -8,6 +8,9 @@ plugins {
     alias(libs.plugins.navigation.safeargs)
     // parcelable generator
     id("kotlin-parcelize")
+    // kotlin plugin serializable
+    // alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -81,5 +84,13 @@ dependencies {
     // coil
     implementation(libs.coil)
     implementation(libs.coil.network)
+
+    // room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    // kotlin plugin serializable
+    implementation(libs.kotlinx.serialization.json)
 
 }
