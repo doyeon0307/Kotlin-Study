@@ -9,6 +9,10 @@ import com.example.booksearch.data.model.Book
 import com.example.booksearch.data.model.SearchResponse
 import com.example.booksearch.data.repository.BookSearchRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 // viewModel 그 자체로는 생서 시 초기값을 받을 수 없으므로 factory 필요
@@ -41,7 +45,13 @@ class BookSearchViewModel (
         bookSearchRepository.deleteBooks(book)
     }
 
-    val favoriteBooks: LiveData<List<Book>> = bookSearchRepository.getFavoriteBooks()
+    // Flow
+//    val favoriteBooks: Flow<List<Book>> = bookSearchRepository.getFavoriteBooks()
+
+    // favoriteBooks를 stateFlow로 변환해서 fragment의 lifeCycle과 동기화
+    // 5000은 백그라운드로 전환되어 flow 수집을 멈추는 경우와, 단순 화면 가로 전환 등 액티비티 변경이어서 flow 수집이 이어지는 경우를 구분하기 위함
+    val favoriteBooks: StateFlow<List<Book>> = bookSearchRepository.getFavoriteBooks()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf())
 
     // Saved State
     // 앱이 종료되어도 데이터 유지

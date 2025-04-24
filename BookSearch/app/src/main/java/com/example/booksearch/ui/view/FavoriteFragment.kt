@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.booksearch.databinding.FragmentFavoriteBinding
 import com.example.booksearch.ui.adapter.BookSearchAdapter
 import com.example.booksearch.ui.viewmodel.BookSearchViewModel
+import com.example.booksearch.util.collectLatestStateFlow
 import com.google.android.material.snackbar.Snackbar
 
 class FavoriteFragment : Fragment() {
@@ -24,7 +25,7 @@ class FavoriteFragment : Fragment() {
     private lateinit var bookSearchAdapter: BookSearchAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding =  FragmentFavoriteBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -34,9 +35,32 @@ class FavoriteFragment : Fragment() {
 
         setUpRecyclerView()
         // RecyclerView가 viewModel의 특정 데이터를 observe하여 실시간 반영하게 함
-        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner) {
+//        bookSearchViewModel.favoriteBooks.observe(viewLifecycleOwner) {
+//            bookSearchAdapter.submitList(it)
+//        }
+        // Flow 데이터 노출
+//        lifecycleScope.launch {
+//            bookSearchViewModel.favoriteBooks.collectLatest {
+//                bookSearchAdapter.submitList(it)
+//            }
+//        }
+
+        // StateFlow 데이터 노출
+        // 코드가 너무 길어 확장 함수 Extensions 생성
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                bookSearchViewModel.favoriteBooks.collectLatest {
+//                    bookSearchAdapter.submitList(it)
+//                }
+//            }
+//        }
+
+        collectLatestStateFlow(bookSearchViewModel.favoriteBooks) {
             bookSearchAdapter.submitList(it)
         }
+
+        // 스와이프 삭제 동작
+        setupTouchHelper(view)
     }
 
     private fun setUpRecyclerView() {
@@ -56,7 +80,7 @@ class FavoriteFragment : Fragment() {
     // 왼쪽으로 스와이프하면 데이터 삭제되도록
     private fun setupTouchHelper(view: View) {
         // 드래그 -> 0 / 스와이프 방향 -> LEFT
-        val itemTouchHelperCallback = object: ItemTouchHelper.SimpleCallback(
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             0, ItemTouchHelper.LEFT
         ) {
             // 사용하지 않을 것이어서 true로 설정
@@ -64,6 +88,7 @@ class FavoriteFragment : Fragment() {
                 return true
             }
 
+            // 스와이프 동작이 발생할 때의 동작
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val book = bookSearchAdapter.currentList[position]
