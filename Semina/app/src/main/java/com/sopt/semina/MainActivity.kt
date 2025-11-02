@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sopt.semina.ui.theme.SeminaTheme
 import com.sopt.semina.week1.LoginPractice
+import com.sopt.semina.week3.EffectButton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +22,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             SeminaTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginPractice(
-                        Modifier.padding(innerPadding)
+                    EffectButton(
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
